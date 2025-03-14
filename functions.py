@@ -1,4 +1,3 @@
-from possistions import cities
 import requests
 from os import system, name
 from dotenv import load_dotenv
