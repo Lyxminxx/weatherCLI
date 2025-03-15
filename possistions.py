@@ -1,3 +1,4 @@
+# Add your cities here, by setting latitude and longitude.
 cities = {
     "Oslo" : "https://api.met.no/weatherapi/nowcast/2.0/complete?lat=59.9333&lon=10.7166",
     "Trondheim" : "https://api.met.no/weatherapi/nowcast/2.0/complete?lat=63.4308&lon=10.4034",

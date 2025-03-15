@@ -1,74 +1,93 @@
+# Imports
 from functions import *
 from possistions import *
 import readchar
 import sys
 
 def selectCity():
+    # Gets all cities from the dictionary in the possistions.py
     from possistions import cities
+    # Gets city names
     cities = list(cities.keys())
+    # Adds exit option
     cities.append('Exit')
+    # For checking the selected city
     selected = 0
+    # To enable and disable searchmode
     search_mode = False 
+
     while True:
-        clear()  # Assuming you have a 'clear' function that clears the screen
+        # Just clears the screen
+        clear()
         print('Select a city or hit "/" to search:')
+        # Prints all cities and adds indentation before the name. Also adds an arrow to show which option is selected.
         for i, city in enumerate(cities):
             prefix = "> " if i == selected else "  "
             print(prefix + city)
-
+        # Starts listening for keypresses
         key = readchar.readkey()
+        # Moves up if the up arrow or k is pressed
         if key == readchar.key.UP or key == 'k' and selected > 0:
             selected -= 1
+        # Moves down if the down arrow or j is pressed
         elif key == readchar.key.DOWN or key == 'j' and selected < len(cities) - 1:
             selected += 1
+        # selects option if Enter is pressed
         elif key == readchar.key.ENTER:
             clear()
+            # As long as it is not exit return the option that is selected
             if cities[selected] != 'Exit':
                 return cities[selected]
+            # If it is exit, stop the program
             else:
                 sys.exit()
+        # Checks if / is pressed
         elif key == "/":
+            # Enables searchmode
             search_mode = True
             search_query = ""
-            all_cities = cities  # Keep original city list
-            filtered_cities = all_cities  # Start with all cities
+            all_cities = cities 
+            filtered_cities = all_cities 
 
             while search_mode:
                 clear()
                 print(f"Search mode ON | Query: {search_query}")
                 
-                # Show filtered results
+                #Prints all cities that match the query with indentation
                 for city in filtered_cities:
                     print("  " + city)
 
                 key = readchar.readkey()
-
-                if key == readchar.key.ESC:  # Exit search mode
+                # If esc is pressed, exit search mode
+                if key == readchar.key.ESC:  
                     search_mode = False
-                    filtered_cities = all_cities  # Reset filter
+                    filtered_cities = all_cities  
                     search_query = ""
-
-                elif key == readchar.key.BACKSPACE and len(search_query) > 0:  # Delete last character
+                # Removes the last letter as long as the query is more than 0 characters long
+                elif key == readchar.key.BACKSPACE and len(search_query) > 0:  
                     search_query = search_query[:-1]
-
-                elif key == readchar.key.ENTER:  # Exit search mode
+                # If enter is pressed it returns all cities that match the query
+                elif key == readchar.key.ENTER:  
                     cities = filtered_cities
                     search_mode = False
+                # Any other key will be added to the query 
                 else:
-                    search_query += key  # Append new character
-
-                # Update filtered cities based on search query
+                    search_query += key
+                # Makes an array with all cities that match the query
                 filtered_cities = [city for city in all_cities if search_query.lower() in city.lower()]
+                # Adds Exit if it isn't in the filtered list.
                 if "Exit" not in filtered_cities:
                     filtered_cities.append("Exit")
                 
-                    
-                
-# Call the function to display and select a city
+# Runs the menu and saves the selected city
 selected_city = selectCity()
 
+# Gets the airtemperature of the selected city
 airtemp = get_Weather(cities[selected_city])['airtemp']
+# Gets the amount of precipitation (rain) of the selected city
 precipitation = get_Weather(cities[selected_city])['precipitation']
+
+# outputs based on temperature and precipitation
 if airtemp is None:
     print("Cannot fetch weatherdata, stick your head out of the window or smth IDK...")
 

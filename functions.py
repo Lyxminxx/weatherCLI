@@ -1,29 +1,31 @@
+# Imports
 import requests
 from os import system, name
 from dotenv import load_dotenv
 import os
 
+
+# Gets the weather info of a city based on the url provided.
 def get_Weather(url):
-    
+    # Gets the useragent from .env
     load_dotenv()
-
-    # Retrieve the user-agent from the environment variable
     user_agent = os.getenv("USER_AGENT")
-
-    # Use the user-agent in your headers
     headers = {
         "User-Agent": user_agent
     }
-    
+
+    # Gets the weather info based on url, and adds the User-Agent for identification
     response = requests.get(url, headers=headers)
 
+    # Checks if we get a valid reponse
     if response.status_code == 200:
         try:
+            # Gets all weatherdata in a json format
             data = response.json()
             details = data['properties']['timeseries'][0]['data']['instant']['details']
-            
+            # Sets the temperature and precipitation to either reflect the current weather conditions or sets it to None and 0 if the response doesn't work
             airtemp = details.get('air_temperature', None)
-            precipitation = details.get('precipitation_amount', 0)  # Defaults to 0 if missing
+            precipitation = details.get('precipitation_amount', 0) 
             
         except (KeyError, IndexError):
             airtemp = None
@@ -31,8 +33,8 @@ def get_Weather(url):
     else:
         airtemp = None
         precipitation = 0
+    # Returns a dictionary with the weather conditions
     return {"airtemp":airtemp,"precipitation":precipitation}
-
 
 def clear():
 
