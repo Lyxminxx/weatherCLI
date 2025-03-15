@@ -59,9 +59,10 @@ def selectCity():
 
                 # Update filtered cities based on search query
                 filtered_cities = [city for city in all_cities if search_query.lower() in city.lower()]
-                filtered_cities.append("Exit")
+                if "Exit" not in filtered_cities:
+                    filtered_cities.append("Exit")
                 
-                
+                    
                 
 # Call the function to display and select a city
 selected_city = selectCity()
