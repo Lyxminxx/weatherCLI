@@ -4,7 +4,7 @@ from os import system, name
 from dotenv import load_dotenv
 import os
 
-
+#Parts of this function is borrowed from William James Dominic Liwanag Shorter
 # Gets the weather info of a city based on the url provided.
 def get_Weather(url):
     # Gets the useragent from .env
