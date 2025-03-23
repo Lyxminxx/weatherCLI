@@ -13,5 +13,8 @@ Contributions are welcome! Whether it's adding new cities, improving the code, o
 4. **Fix Bugs & Improve Code** – Found a bug? Want to optimize something? Submit a PR.  
 5. **Spread the Word** – If you like this project, give it a ⭐ and share it.  
 
-**License:** This project is GPL 3.0 licensed, meaning your contributions must also be open-source.  
+## License
+
+This project is licensed under the GNU General Public License v3.0 or later - see the [LICENSE](LICENSE) file for details.
+
 
